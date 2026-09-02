@@ -1,0 +1,270 @@
+===============================================
+📚 COMPUTER BASED EXAM SYSTEM - SETUP STEPS
+===============================================
+
+=== STEP 1: DOWNLOAD અને EXTRACT ===
+
+1. ZIP FILE DOWNLOAD કરો:
+   - exam-system.zip download કરો
+   
+2. EXTRACT કરો:
+   - Windows: Right-click → Extract All
+   - Mac: Double-click
+   - Linux: unzip exam-system.zip
+
+3. FOLDER STRUCTURE:
+   exam-system/
+   ├── index.html
+   ├── style.css
+   ├── script.js
+   ├── QUICK_START_GU.md
+   ├── README.md
+   ├── FEATURES_AND_SETUP.md
+   └── data/
+       ├── questions.json (30 પ્રશ્નો)
+       └── questions-extended.json (150 પ્રશ્નો)
+
+=== STEP 2: SERVER શરુ કરો ===
+
+વિકલ્પ 1: Python (સરળતમ - આમાં Python હોય તો)
+─────────────────────────────
+1. Terminal/CMD ખોલો
+2. Type કરો: cd exam-system
+3. Type કરો: python -m http.server 8000
+4. Output: Serving HTTP on 0.0.0.0 port 8000
+5. Done! ✓
+
+વિકલ્પ 2: Node.js HTTP Server
+─────────────────────────────
+1. Terminal ખોલો
+2. Type કરો: cd exam-system
+3. Type કરો: npx http-server
+4. Copy કર્યો લિંક (http://127.0.0.1:8080)
+5. Browser માં પેસ્ટ કરો
+
+વિકલ્પ 3: VS Code Live Server
+─────────────────────────────
+1. VS Code ખોલો
+2. Open Folder → exam-system/ પસંદ કરો
+3. index.html રાઇટ-ક્લિક → Open with Live Server
+4. Automatically browser ખુલશે
+
+=== STEP 3: BROWSER ખોલો ===
+
+1. Browser URL bar માં લખો:
+   http://localhost:8000
+
+2. Page load થાય છે તે જાણો
+   (Page લોડ થવા માટે થોડો સમય લાગી શકે છે)
+
+3. "કમ્પ્યુટર આધારિત પરીક્ષા સિસ્ટમ" વાચો
+
+=== STEP 4: EXAM શરુ કરો ===
+
+1. Exam Set પસંદ કરો (1-20):
+   ✓ ડ્રોપડાઉન ખોલો
+   ✓ Exam Set 1 select કરો
+
+2. Settings configure કરો:
+   ✓ Time: 30 (મિનિટમાં)
+   ✓ Questions: 30 (કેટલાં પ્રશ્નો)
+
+3. બટન દબાવો: "પરીક્ષા શરુ કરો"
+
+=== STEP 5: QUESTIONS લોડ કરો ===
+
+બીજો મહત્તવનો: data/questions.json માં પોતાના પ્રશ્નો ઉમેરો
+
+JSON Structure:
+───────────────
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "પ્રશ્ન લખો?",
+      "options": [
+        "વિકલ્પ 1",
+        "વિકલ્પ 2",
+        "વિકલ્પ 3",
+        "વિકલ્પ 4"
+      ],
+      "correctAnswer": 0,
+      "category": "web"
+    }
+  ]
+}
+
+⚠️ IMPORTANT:
+- correctAnswer = 0 (પ્રથમ વિકલ્પ)
+- correctAnswer = 1 (બીજો વિકલ્પ)
+- options હંમેશા 4 હોવા જોઈએ
+- JSON valid હોવો જોઈએ
+
+=== STEP 6: 150 પ્રશ્નો ઉમેરવા ===
+
+Option 1: Pre-made 150 questions વાપરો
+─────────────────────────────────────
+1. data/questions-extended.json વિષય 150 પ્રશ્નો છે
+2. આ ફાઈલ તમારા પ્રશ્નો માટે કાપીકોપી કરો
+3. તમારા પ્રશ્નો જોડો
+
+Option 2: તમારા પોતાના પ્રશ્નો ઉમેરો
+──────────────────────────────────
+1. questions.json ખોલો
+2. Existing structure અનુસાર નવો object ઉમેરો
+3. ID અપડેટ કરો (અલગ હોવો જોઈએ)
+4. File save કરો
+5. Browser refresh કરો
+
+=== STEP 7: BROWSER REFRESH કરો ===
+
+પ્રશ્નો લોડ કરવા બાદ:
+1. Browser Refresh દબાવો (F5 અથવા Ctrl+R)
+2. नવા પ્રશ્નો લોડ થશે
+
+=== STEP 8: TEST EXAM લો ===
+
+1. Exam Set પસંદ કરો
+2. Time/Questions સેટ કરો
+3. Exam શરુ કરો
+4. એક બે પ્રશ્નોના જવાબ આપો
+5. Navigation વાપરીને બીજા પ્રશ્નમાં જાવ
+6. "પરીક્ષા સમાપ્ત કરો" દબાવો
+7. Results જોવો
+
+=== STEP 9: CUSTOMIZATION ===
+
+Timer બદલવો:
+────────────
+File: index.html
+શોધો: <input type="number" id="timeInput" value="30">
+બદલો: value="60" (60 મિનિટ માટે)
+
+Negative Marking બદલવો:
+──────────────────────
+File: script.js
+Function: calculateScore()
+શોધો: totalScore -= 1.33;
+બદલો: totalScore -= 2; (બીજી વ્યાપ માટે)
+
+Color બદલવો:
+────────────
+File: style.css
+શોધો: background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+બદલો: તમારા પોતાના colors
+
+=== STEP 10: GITHUB પર UPLOAD કરો ===
+
+1. GitHub પર account બનાવો (github.com)
+2. نيا Repository બનાવો:
+   - Name: exam-system
+   - Public select કરો
+
+3. Terminal ખોલો:
+   cd exam-system
+   git init
+   git add .
+   git commit -m "Initial commit - Exam System"
+   git remote add origin https://github.com/YOUR-USERNAME/exam-system.git
+   git push -u origin main
+
+4. Done! તમારો code GitHub પર છે
+
+=== TROUBLESHOOTING ===
+
+❌ Questions લોડ નથી થતા
+✓ Solution:
+  1. Browser console ખોલો (F12)
+  2. Errors જોવો
+  3. data/questions.json ચેક કરો
+  4. JSONLint.com વાપરીને validate કરો
+
+❌ Server error આવે છે
+✓ Solution:
+  1. Port 8000 available છે?
+  2. અલગ port વાપરો: python -m http.server 9000
+  3. Browser હટાવો અને ફરી start કરો
+
+❌ Exam start નથી થતો
+✓ Solution:
+  1. Exam Set select કર્યો છે?
+  2. Time > 5 minute છે?
+  3. JavaScript enable છે?
+
+❌ Scores calculate નથી થતા
+✓ Solution:
+  1. Console errors ચેક કરો
+  2. JavaScript enable છે?
+  3. Browser refresh કરો
+
+=== QUICK TEST ===
+
+પહેલું exam test કરવા માટે:
+
+1. URL: http://localhost:8000
+2. Exam Set: 1 પસંદ કરો
+3. Time: 5 મિનિટ (ટેસ્ટ માટે)
+4. Questions: 5 (ટેસ્ટ માટે)
+5. "પરીક્ષા શરુ કરો" દબાવો
+6. બધા પ્રશ્નોના જવાબ આપો
+7. "પરીક્ષા સમાપ્ત કરો" દબાવો
+8. Results જોવો
+9. CSV download કરો
+
+=== FOLDER STRUCTURE AFTER SETUP ===
+
+exam-system/
+├── index.html                    [Main page]
+├── style.css                     [Design]
+├── script.js                     [Logic]
+├── README.md                     [Full docs]
+├── QUICK_START_GU.md             [Gujarati quick guide]
+├── FEATURES_AND_SETUP.md         [Features]
+├── SETUP_STEPS.txt               [આ ફાઈલ]
+├── .git/                         [Git folder - optional]
+└── data/
+    ├── questions.json            [તમારા પ્રશ્નો]
+    └── questions-extended.json   [150 pre-made પ્રશ્નો]
+
+=== FEATURES RECAP ===
+
+✅ 150 પ્રશ્નો support
+✅ 20 અલગ Exam Sets
+✅ Negative Marking (-1.33)
+✅ Real-time Timer
+✅ Live Scoring
+✅ Status Tracking
+✅ CSV Export
+✅ Gujarati Interface
+✅ Mobile Responsive
+✅ Easy Customization
+
+=== SUCCESS CHECKLIST ===
+
+☐ ZIP extract કર્યો
+☐ Server run કર્યો
+☐ Browser પર લોड થયું
+☐ Exam Set select કર્યો
+☐ પ્રશ્નો દેખાયા
+☐ Test exam લીધો
+☐ Results જોધામણી દીધો
+☐ તમારા પ્રશ્નો ઉમેર્યા
+☐ CSV download કર્યો
+☐ GitHub પર upload કર્યો
+
+=== DONE! 🎉 ===
+
+તમારો Exam System તૈયાર છે!
+
+ઈતર કોઈ પ્રશ્ન હોય તો:
+1. README.md વાંચો
+2. QUICK_START_GU.md વાંચો
+3. FEATURES_AND_SETUP.md વાંચો
+4. Code comments જોવો
+
+Happy Exams! 📚✨
+
+================================================
+Version: 1.0
+Last Updated: August 27, 2026
+================================================

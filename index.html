@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Day Computer Based Exam System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="exam-container">
+        <!-- Header with Menu -->
+        <div class="exam-header">
+            <h1>💻 Multi-Day Exam System</h1>
+            <div class="header-controls">
+                <div class="header-info">
+                    <div class="timer">⏱️ સમય: <span id="timerDisplay">00:00</span></div>
+                    <div class="score-display">📊 સ્કોર: <span id="scoreDisplay">0</span></div>
+                </div>
+                <div class="menu-container">
+                    <button class="menu-btn" onclick="toggleMenu()">⋮</button>
+                    <div id="menu" class="menu-dropdown">
+                        <div class="menu-item" onclick="showAttemptHistory()">📋 પ્રયાસ ઇતિહાસ</div>
+                        <div class="menu-item" onclick="showDaySelection()">📅 દિવસ બદલો</div>
+                        <div class="menu-item" onclick="showSettings()">⚙️ સેટિંગ્સ</div>
+                        <div class="menu-item" onclick="resetData()">🔄 ડેટા રીસેટ કરો</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day Selection Screen -->
+        <div id="daySelectionScreen" class="screen active">
+            <div class="day-selection-content">
+                <h2>📅 પરીક્ષા દિવસ પસંદ કરો</h2>
+                <div class="day-grid" id="dayGrid"></div>
+                <div class="day-info" id="dayInfo"></div>
+            </div>
+        </div>
+
+        <!-- Attempt History Modal -->
+        <div id="attemptHistoryModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeAttemptHistory()">&times;</span>
+                <h2>📋 પ્રયાસ ઇતિહાસ</h2>
+                <div id="attemptHistoryContent"></div>
+            </div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="startScreen" class="screen">
+            <div class="start-content">
+                <h2 id="dayTitle">દિવસ 1 - પરીક્ષા</h2>
+                <div class="instructions">
+                    <h3>📋 પરીક્ષા નિયમો:</h3>
+                    <ul>
+                        <li>✓ સાચો જવાબ: <strong>+1</strong> ગુણ</li>
+                        <li>❌ ખોટો જવાબ: <strong>-1.33</strong> ગુણ</li>
+                        <li>⊘ પ્રશ્ન વિનાનો જવાબ: <strong>0</strong> ગુણ</li>
+                        <li>⏳ કુલ પ્રશ્નો (પૂલ): <strong id="poolCount">150</strong></li>
+                        <li>⏱️ સમય: તમે જે સમય સેટ કરો તે મુજબ</li>
+                        <li>🎯 દર વખતે "શરુ કરો" દબાવતાં નવા random પ્રશ્નો આવશે</li>
+                    </ul>
+                </div>
+                <div class="setup-section">
+                    <label>⏱️ પરીક્ષા માટે સમય (મિનિટમાં):</label>
+                    <input type="number" id="timeInput" value="105" min="5" max="180">
+                    
+                    <label>📝 પ્રશ્નોની સંખ્યા:</label>
+                    <input type="number" id="questionCountInput" value="150" min="1" max="150">
+                </div>
+                <button class="btn btn-primary" onclick="startExam()">પરીક્ષા શરુ કરો</button>
+                <button class="btn btn-secondary" onclick="showDaySelection()">← પાછો જાઓ</button>
+            </div>
+        </div>
+
+        <!-- Exam Screen -->
+        <div id="examScreen" class="screen">
+            <div class="question-navigation">
+                <div class="nav-stats">
+                    <span>પ્રશ્ન: <strong id="questionNumber">1</strong> / <strong id="totalQuestions">30</strong></span>
+                </div>
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="previousQuestion()" id="prevBtn">← પહેલાનો</button>
+                    <button class="nav-btn" onclick="nextQuestion()" id="nextBtn">આગળનો →</button>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-text" id="questionText"></div>
+                <div class="options-container" id="optionsContainer"></div>
+            </div>
+
+            <div class="status-bar">
+                <div class="status-item">
+                    <span class="badge attempt">પ્રયાસ: <strong id="attemptCount">0</strong></span>
+                </div>
+                <div class="status-item">
+                    <span class="badge review">પર્યાલોચન: <strong id="reviewCount">0</strong></span>
+                </div>
+                <div class="status-item">
+                    <span class="badge not-visited">ચેક ન કર્યું: <strong id="notVisitedCount">0</strong></span>
+                </div>
+            </div>
+
+            <div class="exam-actions">
+                <button class="btn btn-secondary" onclick="markForReview()">⭐ પર્યાલોચન માટે Mark કરો</button>
+                <button class="btn btn-danger" onclick="submitExam()">✓ પરીક્ષા સમાપ્ત કરો</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="resultsScreen" class="screen">
+            <div class="results-content">
+                <h2>📊 પરીક્ષા પરિણામ</h2>
+                <div class="results-summary">
+                    <div class="result-item">
+                        <span class="result-label">કુલ ગુણ:</span>
+                        <span class="result-value" id="totalScore">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">પ્રતિશત:</span>
+                        <span class="result-value" id="percentage">0%</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">સાચા જવાબ:</span>
+                        <span class="result-value correct" id="correctCount">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">ખોટા જવાબ:</span>
+                        <span class="result-value incorrect" id="incorrectCount">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">ખાલી:</span>
+                        <span class="result-value unattempted" id="unattemptedCount">0</span>
+                    </div>
+                </div>
+
+                <div class="detailed-results">
+                    <h3>📝 વિગતવાર આંસર સ્ટેટસ:</h3>
+                    <div id="detailedResults"></div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="retakeExam()">🔄 આ પરીક્ષા ફરી લો</button>
+                    <button class="btn btn-secondary" onclick="downloadResults()">📥 પરિણામ ડાઉનલોડ કરો</button>
+                    <button class="btn btn-secondary" onclick="showDaySelection()">📅 બીજો દિવસ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
